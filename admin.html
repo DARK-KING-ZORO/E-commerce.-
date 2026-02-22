@@ -710,5 +710,36 @@
             }); 
         });
     </script>
+    <!-- Tumhara pura admin panel ka HTML upar hoga -->
+
+<script type="module">
+  // 🔒 ADMIN EMAIL LOCK
+  const ADMIN_EMAIL = "iwantstrength74@gmail.com";
+
+  import { getAuth, onAuthStateChanged, signOut } 
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const auth = getAuth();
+
+  onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+      alert("Admin login required");
+      window.location.href = "index.html";
+      return;
+    }
+
+    if (user.email !== ADMIN_EMAIL) {
+      alert("Access Denied");
+
+      await signOut(auth);   // force logout
+      window.location.href = "index.html";
+      return;
+    }
+
+    console.log("Admin Verified");
+  });
+</script>
+
 </body>
 </html>
